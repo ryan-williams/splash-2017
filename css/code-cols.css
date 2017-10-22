@@ -2,6 +2,46 @@
   width: 48%;
 }
 
+.img-48 img {
+  width: 48%;
+}
+
+.covdepth-l {
+  position: absolute;
+  width: 48%;
+  background-image: url(../img/coverage-depth.png);
+  background-size: contain;
+  background-repeat: no-repeat;
+  left: 1em;
+  top: 6em;
+  height: 100%;
+  z-index: 3;
+}
+
+.covdepth-r {
+  position: absolute;
+  width: 56%;
+  background-image: url(../img/coverage-depth.gif);
+  background-size: contain;
+  background-repeat: no-repeat;
+  right: 0.3em;
+  top: 6em;
+  height: 100%;
+  z-index: 2;
+}
+
+.covdepth-cdf {
+  position: absolute;
+  width: 95%;
+  text-align: center;
+  background-image: url(../img/cdf.png);
+  background-size: contain;
+  background-repeat: no-repeat;
+  top: 5em;
+  left: 1em;
+  height: 100%;
+}
+
 .half-top-pad {
   padding-top: 0.5em;  
 }

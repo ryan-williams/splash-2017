@@ -44,10 +44,34 @@ class: main-slide
 ---
 ## coverage-depth
 
+.covdepth-l[
+&nbsp;
+]
+
+.covdepth-r[
+&nbsp;
+]
 
 ---
+## coverage-depth
+
+.covdepth-cdf[
+&nbsp;
+]
+
+---
+class: pad-h2-bottom
 ## spark-bam
 
+.img-container[
+![](img/spark-bam-before.png)
+]
+
+--
+
+.img-container[
+![](img/spark-bam-after.png)
+]
 
 ---
 layout: false
@@ -101,7 +125,7 @@ Collection-operations implemented for Spark RDDs
 - group/sample by key: first elems or reservoir-sampled
 
 ---
-## [iterators](https://github.com/hammerlab/iterators)
+## [hammerlab/iterators](https://github.com/hammerlab/iterators)
 
 --
 - scans
@@ -137,81 +161,8 @@ Collection-operations implemented for Spark RDDs
 - etc.
 
 ---
-layout: false
-class: divider-slide, middle
-# Design Patterns
-
----
-layout: true
-template: main-slides
-
----
-class: line-height-code-11, pad-h2-bottom
-## [shapeless-utils](https://github.com/hammerlab/shapeless-utils)
-
---
-### "recursive structural types"
-
---
-
-.left-code-col.code-col[
-Deep case-class hierarchy:
-
-```scala
-case class A(n: Int)
-case class B(s: String)
-case class C(a: A, b: B)
-case class D(b: Boolean)
-case class E(c: C, d: D, a: A, a2: A)
-case class F(e: E)
-```
-]
-
---
-.right-code-col.code-col[
-Instances:
-
-```scala
-val a = A(123)
-val b = B("abc")
-val c = C(a, b)
-val d = D(true)
-val e = E(c, d, A(456), A(789))
-val f = F(e)
-```
-]
-
---
-.left-code-col.code-col[
-Pull out fields by type and/or name:
-
-```scala
-f.find('c)      // f.e.c
-f.findT[C]      // f.e.c
-f.field[C]('c)  // f.e.c
-
-f.field[A]('a2) // f.e.a2
-f.field[B]('b)  // f.e.c.b
-```
-]
-
---
-.right-code-col.code-col[
-As evidence parameters:
-
-```scala
-def findAandB[T](t: T)(
-  implicit
-  findA: Find[T, A],
-  findB: Find[T, B]
-): (A, B) =
-  (findA(t), findB(t))
-```
-]
-
----
 class: line-height-code-11, pad-h2-bottom, slide-padding-3em
-## Command-line interfaces
+### [spark-commands](https://github.com/hammerlab/spark-commands/): command-line interfaces
 
 --
 .left-code-col.code-col[
@@ -295,67 +246,79 @@ case class Opts(
 
 ]
 
---
-.right-code-col.col[
-- [hammerlab/spark-commands](https://github.com/hammerlab/spark-commands/)
-
-]
+---
+layout: false
+class: divider-slide, middle
+# Design Patterns
+### Down the typelevel / implicit rabbit-hole
 
 ---
-## Argument-Passing
+layout: true
+template: main-slides
+
+---
+class: line-height-code-11, pad-h2-bottom
+## [shapeless-utils](https://github.com/hammerlab/shapeless-utils)
 
 --
-[Seen in the wild](https://github.com/hammerlab/guacamole/blob/9d330aeb3a7a040c174b851511f19b42d7717508/src/main/scala/org/hammerlab/guacamole/commands/GermlineAssemblyCaller.scala#L63-L75):
+### "recursive structural types"
 
 --
-minAreaVaf: minAreaVaf = args.minAreaVaf / 100.0f
-discoverGermlineVariants: discoverGermlineVariants
+
+.left-code-col.code-col[
+Deep case-class hierarchy:
+
+```scala
+case class A(n: Int)
+case class B(s: String)
+case class C(a: A, b: B)
+case class D(b: Boolean)
+case class E(c: C, d: D, a: A, a2: A)
+case class F(e: E)
 ```
-val calledAlleles =
-  {{discoverGermlineVariants}}(
-    args.sampleName,
-    kmerSize = args.kmerSize,
-    assemblyWindowRange = args.assemblyWindowRange,
-    minOccurrence = args.minOccurrence,
-    {{minAreaVaf}},
-    reference = reference,
-    minMeanKmerQuality = args.minMeanKmerQuality,
-    minPhredScaledLikelihood = args.minLikelihood,
-    shortcutAssembly = args.shortcutAssembly
-  )
+]
+
+--
+.right-code-col.code-col[
+Instances:
+
+```scala
+val a = A(123)
+val b = B("abc")
+val c = C(a, b)
+val d = D(true)
+val e = E(c, d, A(456), A(789))
+val f = F(e)
 ```
---
-Just two (trivial) things happening here:
+]
 
 --
-minAreaVaf: `minAreaVaf = args.minAreaVaf / 100.0f`
-1. convert a percentage to a `Double`
+.left-code-col.code-col[
+Pull out fields by type and/or name:
+
+```scala
+f.find('c)      // f.e.c
+f.findT[C]      // f.e.c
+f.field[C]('c)  // f.e.c
+
+f.field[A]('a2) // f.e.a2
+f.field[B]('b)  // f.e.c.b
+```
+]
 
 --
-minAreaVaf: minAreaVaf = args.minAreaVaf / 100.0f
-discoverGermlineVariants: `discoverGermlineVariants`
-2. call .highlight-inline-code[`discoverGermlineVariants`] with (10!) obvious arguments
+.right-code-col.code-col[
+As evidence parameters:
 
-
---
-Shorthand for passing variables as identically-named parameters would be nice
-
---
-- can kind of do this with `kwargs` in Python, structuring/destructuring in JavaScript
-
-
---
-Even better: use implicits to do "obvious" arg-passing like this
-
---
-- variable names ⟶ types
-
-
---
-  ⟹ only one instance of a given type in scope
-
---
-- what to do with var names? `_1`, `_2`, `_3`, …? 😭
+```scala
+def findAandB[T](t: T)(
+  implicit
+  findA: Find[T, A],
+  findB: Find[T, B]
+): (A, B) =
+  (findA(t), findB(t))
+```
+]
 
 ---
 name: mixing-implicits
@@ -373,7 +336,7 @@ psMsg:
 - output `Path` {{psMsg}}
 
 --
-psMsg:  or just a `PrintStream`
+psMsg:  (or: just a `PrintStream`)
 
 --
 - `SparkContext`
@@ -453,7 +416,7 @@ abstract class HasArgs(args: Array[String])
 .l.col[
 ```
 trait HasInputPath { self: Args ⇒
-  implicit val inPath = args(0)
+  implicit val inPath = Path(args(0))
 }
 ```
 ]
@@ -461,7 +424,7 @@ trait HasInputPath { self: Args ⇒
 .r.col[
 ```
 trait HasOutputPath { self: Args ⇒
-  implicit val outPath = args(1)
+  `val` outPath = Path(args(1))
 }
 ```
 ]
@@ -567,15 +530,9 @@ implicit val _iso: Iso[FalseCounts] =
 ```
 
 ---
-## Dreams
-- biofx filesystem layouts
-- AST editing / style
-- shading / linking
-
----
 layout: false
 class: divider-slide, middle
 # Thanks!
 
-
+--
 
