@@ -7,7 +7,7 @@ class: middle, title-slide
 
 <br/>
 
-SPLASH 2017
+Scala/Splash 2017
 
 <br/>
 
@@ -19,6 +19,23 @@ Ryan Williams
 layout: true
 name: main-slides
 class: main-slide
+
+---
+# Overview
+- Intro
+- Genomic applications
+- General Scala libraries
+- Design-pattern deep-dive
+  - "fun" with implicits
+
+.top-pad-2em[
+**Slides: [hammerlab.org/splash-2017](http://hammerlab.org/splash-2017)**
+]
+
+--
+.top-pad-2em[
+Everything discussed in this talk open source / Apache 2.0
+]
 
 ---
 # Hammer Lab
@@ -34,12 +51,6 @@ class: main-slide
 .img-container.top-pad-2em[
 ![](img/lab-photo.jpg)
 ]
-
----
-# Overview
-- Applications
-- Libraries
-- Design-Pattern Deep-Dive
 
 ---
 ## coverage-depth
@@ -63,7 +74,10 @@ class: main-slide
 class: pad-h2-bottom
 ## spark-bam
 
-.img-container[
+Splitting genomic BAM files
+
+--
+.img-container.half-top-pad[
 ![](img/spark-bam-before.png)
 ]
 
@@ -76,7 +90,18 @@ class: pad-h2-bottom
 ---
 layout: false
 class: divider-slide, middle
-# Libraries
+sub1: &nbsp;
+sub2: &nbsp;
+# Related Libraries
+
+### {{sub1}}
+
+#### {{sub2}}
+--
+sub1: Non-genomics-specific
+
+--
+sub2: Maybe you want to use them
 
 ---
 layout: true
@@ -95,13 +120,13 @@ Collection-operations implemented for Spark RDDs
   - {elements, values of tuples}
 
 --
-- `.runLengthEncode`
+- `.runLengthEncode`, group consecutive elements by predicate / `Ordering`
 
 --
 - `.reverse`
 
 --
-- `.maxByKey`, `.minByKey`
+- reductions: `.maxByKey`, `.minByKey`
 
 --
 - sliding/windowed traversals
@@ -110,19 +135,28 @@ Collection-operations implemented for Spark RDDs
 - `.size` - smart `count`
 
 --
+  - multiple counts in one job:
+    ```
+    val (count1, count2) = (rdd1, rdd2).size
+    ```
+
+--
+  - smart partition-tracking: reuse counts for `UnionRDD`s
+
+--
 - zips
 
 --
-  - lazy partition-count
-
---
-  - eager partition-number check)
+  - lazy partition-count, eager partition-number check
 
 --
 - `sameElements`, `equals`
 
 --
 - group/sample by key: first elems or reservoir-sampled
+
+--
+  - HyperGeometric distribution handling `Long`s: [hammerlab/math-utils](https://github.com/hammerlab/math-utils)
 
 ---
 ## [hammerlab/iterators](https://github.com/hammerlab/iterators)
