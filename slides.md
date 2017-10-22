@@ -490,7 +490,7 @@ abstract class HasArgs(args: Array[String])
 --
 .l.col[
 ```
-trait HasInputPath { self: Args ⇒
+trait HasInputPath { self: HasArgs ⇒
   implicit val inPath = Path(args(0))
 }
 ```
@@ -498,7 +498,7 @@ trait HasInputPath { self: Args ⇒
 --
 .r.col[
 ```
-trait HasOutputPath { self: Args ⇒
+trait HasOutputPath { self: HasArgs ⇒
   `val` outPath = Path(args(1))
 }
 ```
