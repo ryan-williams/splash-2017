@@ -1,0 +1,136 @@
+.col {
+  width: 48%;
+}
+
+.half-top-pad {
+  padding-top: 0.5em;  
+}
+
+.third-top-pad {
+  padding-top: 0.3em;
+}
+
+.tenth-top-pad {
+  padding-top: 0.1em;
+}
+
+.top-pad {
+  padding-top: 1em;
+}
+
+.top-pad-2em {
+  padding-top: 2em;
+}
+
+.code-col-40 {
+  width: 40%;
+}
+
+.code-col-56 {
+  width: 56%;
+}
+
+.code-col {
+  /*position: absolute;*/
+  /*top: 50%;*/
+  width: 48%;
+  padding-top: 1em;
+}
+
+.code-col pre {
+  /*transform: translate(0%, -50%);*/
+}
+
+.l {
+  float: left;
+}
+
+.r {
+  float: right;
+}
+
+.left-code-col {
+  /*left: 3em;*/
+  /*right: 52%;*/
+  float: left;
+}
+
+.right-code-col {
+  /*left: 52%;*/
+  /*right: 3em;*/
+  float: right;
+}
+
+.code-cols-slide ul {
+	clear: both;
+}
+
+.code-cols-slide h3 {
+	margin-top: 0.3em;
+	margin-bottom: 0.4em;
+}
+
+.code-cols-folding .right-code-col .remark-code-line:nth-child(4) {
+	display: none;
+}
+
+.code-cols-folding .right-code-col .remark-code-line:nth-child(5) {
+	display: none;
+}
+
+.code-cols-folding .right-code-col .remark-code-line:nth-child(6) {
+	display: none;
+}
+
+.code-cols-folding .right-code-col .remark-code-line:nth-child(7) {
+	display: none;
+}
+
+.code-cols-folding .right-code-col .remark-code-line:nth-child(8) {
+	display: none;
+}
+
+.alternate-syntax-colors .right-code-col code {
+  background-color: #004;
+  color: #eee;
+}
+
+.alternate-syntax-colors .right-code-col .hljs-number {
+  color: #f8f;
+}
+
+.alternate-syntax-colors .right-code-col .hljs-literal {
+  font-weight: bold;
+  color: #6e6;
+}
+
+.alternate-syntax-colors .right-code-col .hljs-keyword {
+  color: #adf;
+}
+
+.alternate-syntax-colors .right-code-col .hljs-type {
+  color: #fc6;
+}
+
+.alternate-syntax-colors .right-code-col .hljs-title {
+  color: #f99;
+}
+
+.alternate-syntax-colors .left-code-col .remark-code-span-highlighted {
+	background-color: yellow;
+	font-weight: bold;
+}
+
+.alternate-syntax-colors .right-code-col .remark-code-span-highlighted {
+	background-color: yellow;
+	color: purple;
+	font-weight: bold;
+}
+
+.alternate-syntax-colors .right-code-col .remark-code-span-highlighted .hljs-type {
+  color: #842;
+}
+
+.ul-no-margin-bottom ul {
+	margin-bottom: 0;
+}

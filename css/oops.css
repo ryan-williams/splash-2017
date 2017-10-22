@@ -1,0 +1,42 @@
+.banner {
+  text-align: center;
+  font-size: 2em;
+  line-height: 1em;
+  font-weight: bold;
+}
+
+.oops {
+  color: red;
+}
+
+.good {
+  color: green;
+}
+
+.meh {
+  color: darkgoldenrod;
+}
+
+.koolaid {
+  position: absolute;
+  bottom: 1em;
+  left: 0;
+  width: 100%;
+  text-align: center;
+}
+
+.good-comment .hljs-comment {
+  color: green !important;
+  font-weight: bold;
+}
+
+.meh-comment .hljs-comment {
+  color: darkgoldenrod !important;
+  font-weight: bold;
+}
+
+.oops-comment .hljs-comment {
+  color: red !important;
+  font-weight: bold;
+}
+

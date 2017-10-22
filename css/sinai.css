@@ -1,0 +1,43 @@
+h1,h2,h3,h4 {
+	font-family: 'PT SANS';
+	font-weight: bold;
+}
+
+.title-slide {
+  background-image: url(../img/bg-sinai-front.png);
+  background-size: cover;
+  color: white;
+}
+
+.title-slide h1, .title-slide h2, .title-slide h3, .title-slide h4 {
+	color: white;
+	text-align: left;
+}
+
+.title-slide h1 {
+	max-width: 80%;
+}
+
+.main-slide {
+  background-image: url(../img/bg-sinai-main.png);
+  background-size: 100%;
+  background-position-y: 1px; 
+}
+
+.main-slide h1, .main-slide h2, .main-slide h3, .main-slide h4 {
+	color: #00b0ee;
+}
+
+.divider-slide {
+	background-color: #00abef;
+	text-align: center;
+}
+
+.divider-slide h1, .divider-slide h2, .divider-slide h3, .divider-slide h4 {
+	color: white;
+}
+
+.divider-slide .remark-slide-number {
+	color: white;
+	opacity: 0.7;
+}
