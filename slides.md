@@ -264,7 +264,7 @@ case class Opts(
 
 --
 .right-code-col.col[
-- nesting: inheritance vs. composition
+- inheritance vs. composition
 
 ]
 
@@ -383,9 +383,38 @@ psMsg:  (or: just a `PrintStream`)
 
 
 --
+name: mixing2
 .half-top-pad[
 **How to make all of these things `implicit`ly available with minimal boilerplate?**
 ]
+
+--
+.clear-both.half-top-pad[
+Ideally:
+]
+
+--
+.l.col[
+```
+def app1() = {
+  // call methods that want implicit \
+  // input Path, SparkContext
+}
+```
+]
+
+--
+.r.col[
+```
+def app2() = {
+  // call methods that want implicit \
+  // Path, SparkContext, PrintStream
+}
+```
+]
+
+---
+template: mixing2
 
 --
 .l.code-col-40[
@@ -434,7 +463,7 @@ answer:
 How to make many `implicit`s available with minimal boilerplate? {{answer}}
 
 --
-answer: Inheritance…
+answer: &nbsp; ≈ 🎂 🍰
 
 --
 ```
