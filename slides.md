@@ -38,18 +38,30 @@ Everything discussed in this talk open source / Apache 2.0
 ]
 
 ---
+class: slide-padding-3em
 # Hammer Lab
 
-- Mt. Sinai School of Medicine, NYC
+Mt. Sinai School of Medicine, NYC
+
+.half-top-pad[
+**Research**
+]
+
 - Personal Genome Vaccine pipeline / clinical trial
 - Checkpoint blockade biomarkers, mutational signatures
-- Genome biofx using Spark + Scala
-- Biofx workflows and tools in OCaml
 - http://www.hammerlab.org/
 
+.half-top-pad[
+**Tools**
+]
 
-.img-container.top-pad-2em[
-![](img/lab-photo.jpg)
+- Genome biofx using Spark + Scala
+- Biofx workflows and tools in OCaml
+- The usual suspects: python, R, …
+
+
+.lab-photo[
+&nbsp;
 ]
 
 ---
