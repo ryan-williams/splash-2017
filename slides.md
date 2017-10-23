@@ -32,7 +32,6 @@ class: main-slide
 **Slides: [hammerlab.org/splash-2017](http://hammerlab.org/splash-2017)**
 ]
 
---
 .top-pad-2em[
 Everything discussed in this talk open source / Apache 2.0
 ]
@@ -88,12 +87,9 @@ class: pad-h2-bottom
 
 Splitting genomic BAM files
 
---
 .img-container.half-top-pad[
 ![](img/spark-bam-before.png)
 ]
-
---
 
 .img-container[
 ![](img/spark-bam-after.png)
@@ -102,18 +98,11 @@ Splitting genomic BAM files
 ---
 layout: false
 class: divider-slide, middle
-sub1: &nbsp;
-sub2: &nbsp;
 # Related Libraries
 
-### {{sub1}}
+### Non-genomics-specific
 
-#### {{sub2}}
---
-sub1: Non-genomics-specific
-
---
-sub2: Maybe you want to use them
+#### Maybe you want to use them
 
 ---
 layout: true
@@ -122,95 +111,45 @@ class: main-slide
 ## [magic-rdds](https://github.com/hammerlab/magic-rdds)
 Collection-operations implemented for Spark RDDs
 
---
 - scans
-
---
   - {left,right}
-
---
   - {elements, values of tuples}
-
---
 - `.runLengthEncode`, group consecutive elements by predicate / `Ordering`
-
---
 - `.reverse`
-
---
 - reductions: `.maxByKey`, `.minByKey`
-
---
 - sliding/windowed traversals
-
---
 - `.size` - smart `count`
-
---
   - multiple counts in one job:
     ```
     val (count1, count2) = (rdd1, rdd2).size
     ```
 
---
   - smart partition-tracking: reuse counts for `UnionRDD`s
-
---
 - zips
-
---
   - lazy partition-count, eager partition-number check
-
---
 - `sameElements`, `equals`
-
---
 - group/sample by key: first elems or reservoir-sampled
-
---
   - HyperGeometric distribution handling `Long`s: [hammerlab/math-utils](https://github.com/hammerlab/math-utils)
 
 ---
 ## [hammerlab/iterators](https://github.com/hammerlab/iterators)
 
---
-- scans
-
---
+- scans (in terms of `cats.Monoid`)
 - sliding/windowed traversals
-
---
 - eager drops/takes
-
---
   - by number
-
---
   - while
-
---
   - until
-
---
 - sorted/range zips
-
---
 - `SimpleBufferedIterator`
-
---
   - iterator in terms of `_advance(): Option[T]`
-
---
   - `hasNext` lazily buffers/caches `head`
-
---
 - etc.
 
 ---
 class: line-height-code-11, pad-h2-bottom, slide-padding-3em
 ### [spark-commands](https://github.com/hammerlab/spark-commands/): command-line interfaces
 
---
 .left-code-col.code-col[
 ### [args4j](http://args4j.kohsuke.org/)
 
@@ -242,7 +181,6 @@ class Opts {
 ```
 ]
 
---
 .right-code-col.code-col[
 ### [case-app](https://github.com/alexarchambault/case-app)
 
@@ -262,34 +200,11 @@ case class Opts(
 )
 ```
 
-]
-
---
-.right-code-col.code-col[
 - statically-checked/typed handlers
-]
-
---
-.right-code-col.col[
 - implicit resolution
-]
-
---
-.right-code-col.col[
 - inheritance vs. composition
-
-]
-
---
-.right-code-col.col[
 - mutable vs. immutable
-
-]
-
---
-.right-code-col.col[
 - case-app positional-arg support: [#58](https://github.com/alexarchambault/case-app/issues/58)
-
 ]
 
 ---
@@ -306,10 +221,7 @@ template: main-slides
 class: line-height-code-11, pad-h2-bottom
 ## [shapeless-utils](https://github.com/hammerlab/shapeless-utils)
 
---
 ### "recursive structural types"
-
---
 
 .left-code-col.code-col[
 Deep case-class hierarchy:
@@ -324,7 +236,6 @@ case class F(e: E)
 ```
 ]
 
---
 .right-code-col.code-col[
 Instances:
 
@@ -338,7 +249,6 @@ val f = F(e)
 ```
 ]
 
---
 .left-code-col.code-col[
 Pull out fields by type and/or name:
 
@@ -352,7 +262,6 @@ f.field[B]('b)  // f.e.c.b
 ```
 ]
 
---
 .right-code-col.code-col[
 As evidence parameters:
 
@@ -367,35 +276,18 @@ def findAandB[T](t: T)(
 ]
 
 ---
-name: mixing-implicits
+name: mixing2
 class: line-height-code-11, pad-h2-bottom
 ## Nesting/Mixing implicit contexts
 
---
 **Minimal boilerplate Spark CLI apps:**
 
---
 - input `Path`
-
---
-psMsg: 
-- output `Path` {{psMsg}}
-
---
-psMsg:  (or: just a `PrintStream`)
-
---
+- output `Path` (or: just a `PrintStream`)
 - `SparkContext`
-
---
 - select `Broadcast` variables
-
---
 - other argument-input objects
 
-
---
-name: mixing2
 .half-top-pad[
 **How to make all of these things `implicit`ly available with minimal boilerplate?**
 ]
@@ -405,7 +297,6 @@ name: mixing2
 Ideally:
 ]
 
---
 .l.col[
 ```
 def app1() = {
@@ -415,7 +306,6 @@ def app1() = {
 ```
 ]
 
---
 .r.col[
 ```
 def app2() = {
@@ -428,7 +318,6 @@ def app2() = {
 ---
 template: mixing2
 
---
 .l.code-col-40[
 ```
 def run(
@@ -444,7 +333,6 @@ def run(
 ```
 ]
 
---
 .r.code-col-56[
 ```
 case class Context(
@@ -457,7 +345,6 @@ case class Context(
 ```
 ]
 
---
 .r.code-col-56[
 ```
 def run(`implicit ctx: Context`): Unit = {
@@ -470,24 +357,20 @@ def run(`implicit ctx: Context`): Unit = {
 ]
 
 ---
-template: mixing-implicits
-answer: 
-How to make many `implicit`s available with minimal boilerplate? {{answer}}
+class: line-height-code-11, pad-h2-bottom
+## Nesting/Mixing implicit contexts
+How to make many `implicit`s available with minimal boilerplate? &nbsp; ≈ 🎂 🍰
 
---
-answer: &nbsp; ≈ 🎂 🍰
-
---
 ```
 trait HasSparkContext {
   implicit val sc: SparkContext = new SparkContext(…)
 }
 ```
---
+
 ```
 abstract class HasArgs(args: Array[String])
 ```
---
+
 .l.col[
 ```
 trait HasInputPath { self: HasArgs ⇒
@@ -495,7 +378,7 @@ trait HasInputPath { self: HasArgs ⇒
 }
 ```
 ]
---
+
 .r.col[
 ```
 trait HasOutputPath { self: HasArgs ⇒
@@ -503,7 +386,7 @@ trait HasOutputPath { self: HasArgs ⇒
 }
 ```
 ]
---
+
 .clear-both.tenth-top-pad[
 ```
 trait HasPrintStream extends HasOutputPath { self: Args ⇒
@@ -512,7 +395,6 @@ trait HasPrintStream extends HasOutputPath { self: Args ⇒
 ```
 ]
 
---
 .l.col[
 ```
 class MinimalApp(args: Array[String])
@@ -523,7 +405,6 @@ class MinimalApp(args: Array[String])
 ```
 ]
 
---
 .r.col[
 ```
 object Main {
@@ -540,7 +421,6 @@ object Main {
 class: line-height-code-11, pad-h2-bottom
 ## `{to,from}String`: invertible syntax
 
---
 Miscellaneous tools output "reports":
 
 ```text
@@ -551,7 +431,6 @@ Miscellaneous tools output "reports":
     22489 false positives, 0 false negatives
 ```
 
---
 .left-code-col.col.half-top-pad[
 That comes from a data structure like:
 
@@ -567,7 +446,6 @@ case class Result(
 ```
 ]
 
---
 .right-code-col.col.half-top-pad[
 or better yet:
 
@@ -582,23 +460,12 @@ case class Result(
 ```
 ]
 
---
-toStringMsg: This is basically `toString`
 .clear-both[
-- {{toStringMsg}}
+- This is ~~basically `toString`~~ the `Show` type-class
 ]
-
---
-toStringMsg: This is ~~basically `toString`~~ the `Show` type-class
-
---
 - twist: downstream tools want to parse these reports
-
---
 - want to re-hydrate `Result` instances
 
-
---
 ```
 implicit val _iso: Iso[FalseCounts] =
     iso"${'numFPs} false positives, ${'numFNs} false negatives" }
@@ -608,6 +475,3 @@ implicit val _iso: Iso[FalseCounts] =
 layout: false
 class: divider-slide, middle
 # Thanks!
-
---
-
